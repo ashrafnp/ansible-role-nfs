@@ -1,0 +1,27 @@
+---
+# tasks file for project/autofs
+- name: installing autofs
+  dnf:
+    name:
+      - "{{ apps1 }}"
+      - "{{ apps2 }}"
+    state: latest
+- name: starting {{ apps }}
+  service:
+    name: "{{ apps1 }}"
+    state: started
+    enabled: true
+- name: creating entry in auto.master
+  lineinfile:
+    path: /etc/auto.master
+    line: "/opt  /etc/auto.slave   --timeout=30"
+    create: true
+- name: adding aline
+  lineinfile:
+    path: /etc/auto.slave
+    line: "shared   -fstype=nfs,rw    servera:/opt/data"
+    create: true
+    mode: 0644
+  notify: restarting autofs  
+
+

@@ -1,0 +1,8 @@
+---
+# handlers file for project/autofs
+- name: restarting autofs
+  service:
+    name: "{{ apps1 }}"
+    state: restarted
+...    
+

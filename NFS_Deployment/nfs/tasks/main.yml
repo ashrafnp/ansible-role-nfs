@@ -1,0 +1,45 @@
+---
+# tasks file for project/nfs
+- name: installing {{ app }} application
+  yum:
+    name: "{{ app }}"
+    state: latest
+- name: starting {{ srv }} service
+  service:
+    name: "{{ srv }}"
+    state: started
+    enabled: true
+- name: creating a directory
+  file:
+    dest: /opt/data
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+- name: creating multiple files
+  file:
+    dest: /opt/data/file.txt
+    state: touch
+    owner: root
+    group: root
+    mode: 0666
+- name: creating an entry in exports
+  lineinfile:
+    path: /etc/exports
+    line: "/opt/data     serverb(rw,sync)"
+    state: present
+- name: refreshing exports file
+  shell: exportfs -arv
+- name: creating service rule
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    immediate: yes
+    state: enabled
+  loop:
+    - mountd
+    - nfs
+    - rpc-bind
+  notify: restarting nfs  
+    
+  

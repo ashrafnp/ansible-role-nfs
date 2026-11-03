@@ -1,0 +1,5 @@
+---
+# vars file for project/autofs
+apps1: autofs
+apps2: nfs-utils
+...

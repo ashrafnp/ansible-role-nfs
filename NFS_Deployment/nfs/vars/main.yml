@@ -1,0 +1,5 @@
+---
+# vars file for project/nfs
+app: nfs-utils
+srv: nfs-server
+...

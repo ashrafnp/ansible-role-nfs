@@ -1,0 +1,14 @@
+---
+- name: installing and configuring nfs server
+  hosts: servera
+  vars_files: /ansi7am/project/nfs/vars/main.yml
+  roles:
+    - /ansi7am/project/nfs
+- name: installing and configuring autofs
+  hosts: serverb
+  vars_files: /ansi7am/project/autofs/vars/main.yml
+  roles:
+    - /ansi7am/project/autofs
+...    
+
+
